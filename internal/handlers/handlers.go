@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"booking/internal/config"
+	"booking/internal/forms"
 	"booking/internal/models"
 	"booking/internal/render"
 	"encoding/json"
@@ -94,4 +95,14 @@ func (m *Repository) AvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, r, "reservation.page.tmpl", &models.TemplateData{})
 }
