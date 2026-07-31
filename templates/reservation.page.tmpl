@@ -6,40 +6,31 @@
             <div class="col">
                 <h1>Make a Reservation</h1>
                 <p><strong>Reservation Details</strong></p>
-
-                <form action="/make-reservation" method="post" novalidate class="">
-                    <div class="row" id="reservation-dates">
-                        <div class="col">
-                            <div class="mb-3">
-                                <input required class="form-control" type="text" name="start" placeholder="Arrival">
-                            </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="mb-3">
-                                <input required class="form-control" type="text" name="end" placeholder="Departure">
-                            </div>
-                        </div>
+                <form action="/make-reservation" method="post" novalidate class="needs-validation">
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <div class="form-group mt-3">
+                        <label for="first_name">First Name:</label>
+                        {{with .Form.Errors.Get "first_name"}}
+                            <lable class="text-danger">{{.}}</lable>
+                        {{end}}
+                        <input class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}" id="first_name" autocomplete="off" type='text' name='first_name' required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input class="form-control" id="last_name" autocomplete="off" type='text' name='last_name' required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input class="form-control" id="email" autocomplete="off" type='email' name='email' required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input class="form-control" id="phone" autocomplete="off" type='text' name='phone' required>
                     </div>
                     <hr>
-                    <button type="submit" class="btn btn-primary">Search Availability</button>
+                    <button type="submit" class="btn btn-primary">Make Reservation</button>
                 </form>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <p id="myParagraph">This is some text</p>
-                <p>
-                    <button id="colorButton" class="btn btn-outline-secondary">Click Me</button>
-                </p>
-            </div>
-        </div>
-
     </div>
-
-{{end}}
-
-{{define "js"}}
-
 {{end}}
