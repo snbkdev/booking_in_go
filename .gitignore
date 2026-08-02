@@ -44,3 +44,5 @@ Thumbs.db
 
 # Your compiled templates (если будете компилировать)
 assets/bindata.go
+
+database.yml
