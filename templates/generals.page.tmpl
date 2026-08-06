@@ -1,6 +1,19 @@
 {{template "base" .}}
 
 {{define "content"}}
+    <style>
+        /* календарь внутри модалки должен быть выше кнопок OK/Cancel,
+           иначе .swal2-actions перехватывает клики по датам */
+        .swal2-popup .swal2-html-container {
+            z-index: 2;
+            overflow: visible;
+        }
+
+        .swal2-popup .swal2-actions {
+            z-index: 0;
+        }
+    </style>
+
     <div class="container">
         <div class="row">
             <div class="col">
@@ -48,6 +61,7 @@
                     const rp = new DateRangePicker(elem, {
                         format: 'yyyy-mm-dd',
                         showOnFocus: true,
+                        minDate: new Date(),
                 })
             },
 
@@ -57,11 +71,17 @@
             },
 
             callback: function(result) {
-                console.log("called");
+                if (!result) {
+                    return;
+                }
 
-                let form = document.getElementById("check-availability-form");
-                let formData = new FormData(form);
+                // result приходит из preConfirm: [start, end].
+                // Читать значения из формы нельзя — модалка к этому моменту уже закрыта.
+                let formData = new FormData();
+                formData.append("start", result[0]);
+                formData.append("end", result[1]);
                 formData.append("csrf_token", "{{.CSRFToken}}");
+                formData.append("room_id", "2");
 
                 fetch('/search-availability-json', {
                     method: "post",
@@ -69,9 +89,16 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
-                    console.log(data.ok);
-                    console.log(data.message);
+                    if (data.ok) {
+                        attention.custom({
+                        icon: 'success',
+                        showConfirmButton: false,
+                        msg: '<p>Room is available!</p>' + '<p><a href="/book-room?id=' + data.room_id + '&s=' + data.start_date + '&e=' + data.end_date + '" class="btn btn-primary">Book now!</a></p>',
+                        })
+                    } else {
+                        attention.error({
+                        msg: "No availability",})
+                    }
                 })
             }
             });
