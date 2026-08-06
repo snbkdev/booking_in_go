@@ -1,7 +1,20 @@
+/* прижимаем футер к низу окна, когда контента на странице мало */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* контент забирает весь свободный запас по высоте и выталкивает футер вниз */
+.page-content {
+    flex: 1 0 auto;
+}
+
 .my-footer {
+    flex-shrink: 0;
     height: 5em;
-    background-color: #163b65;
     margin-top: 1.5em;
+    background-color: #163b65;
     padding: 1em;
     color: #FFFFFF;
     font-size: 80%;

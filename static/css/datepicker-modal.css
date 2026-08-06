@@ -1,0 +1,10 @@
+/* календарь внутри модалки должен быть выше кнопок OK/Cancel,
+   иначе .swal2-actions перехватывает клики по датам */
+.swal2-popup .swal2-html-container {
+    z-index: 2;
+    overflow: visible;
+}
+
+.swal2-popup .swal2-actions {
+    z-index: 0;
+}
