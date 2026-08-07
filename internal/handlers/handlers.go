@@ -10,6 +10,7 @@ import (
 	"booking/internal/repository"
 	"booking/internal/repository/dbrepo"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -299,68 +300,41 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	//
+	htmlMessage := fmt.Sprintf(`
+		<strong>Reservation Confirmation!</strong><br>
+		Dear %s:, <br>
+		This is confirm your reservation from %s to %s
+	`, reservation.FirstName, reservation.StartDate.Format("2006-01-01"), reservation.EndDate.Format("2006-01-02"))
+
+	// send notifications - first to guest
+	msg := models.MailData{
+		To:      reservation.Email,
+		From:    "asanbek.best@mail.ru",
+		Subject: "Reservation Confirmation!!!",
+		Content: htmlMessage,
+	}
+
+	m.App.MailChan <- msg
+
+	// send notification to property owner
+	htmlMessage = fmt.Sprintf(`
+		<strong>Reservation Notification!</strong><br>
+		Dear %s:, <br>
+		A reservation has been made for %s to %s
+	`, reservation.Room.RoomName, reservation.StartDate.Format("2006-01-01"), reservation.EndDate.Format("2006-01-02"))
+
+	msg = models.MailData{
+		To:      "asanbek.best@mail.ru",
+		From:    "asanbek.best@mail.ru",
+		Subject: "Reservation Notification!!!",
+		Content: htmlMessage,
+	}
+
+	m.App.MailChan <- msg
+
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
-
-	// reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
-	// if !ok {
-	// 	helpers.ServerError(w, errors.New("can't get from session"))
-	// 	return
-	// }
-
-	// err := r.ParseForm()
-	// if err != nil {
-	// 	helpers.ServerError(w, err)
-	// 	return
-	// }
-
-	// reservation.FirstName = r.Form.Get("first_name")
-	// reservation.LastName = r.Form.Get("last_name")
-	// reservation.Phone = r.Form.Get("phone")
-	// reservation.Email = r.Form.Get("email")
-
-	// form := forms.New(r.PostForm)
-
-	// form.Required("first_name", "last_name", "email")
-	// form.MinLength("first_name", 3)
-	// form.IsEmail("email")
-
-	// if !form.Valid() {
-	// 	data := make(map[string]interface{})
-	// 	data["reservation"] = reservation
-
-	// 	render.Template(w, r, "reservation.page.tmpl", &models.TemplateData{
-	// 		Form: form,
-	// 		Data: data,
-	// 	})
-	// 	return
-	// }
-
-	// newReservationID, err := m.DB.InsertReservation(reservation)
-	// if err != nil {
-	// 	helpers.ServerError(w, err)
-	// 	return
-	// }
-
-	// m.App.Session.Put(r.Context(), "reservation", reservation)
-
-	// restriction := models.RoomRestriction{
-	// 	StartDate:     reservation.StartDate,
-	// 	EndDate:       reservation.EndDate,
-	// 	RoomID:        reservation.RoomID,
-	// 	ReservationID: newReservationID,
-	// 	RestrictionID: 1,
-	// }
-
-	// err = m.DB.InsertRoomRestriction(restriction)
-	// if err != nil {
-	// 	helpers.ServerError(w, err)
-	// 	return
-	// }
-
-	// m.App.Session.Put(r.Context(), "reservation", reservation)
-
-	// http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
 }
 
 // ReservationSummary displays the reservation summary
