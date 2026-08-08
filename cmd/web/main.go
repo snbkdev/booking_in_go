@@ -7,11 +7,15 @@ import (
 	"booking/internal/helpers"
 	"booking/internal/models"
 	"booking/internal/render"
+	"bufio"
 	"encoding/gob"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
+	"net/url"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
@@ -49,7 +53,11 @@ func main() {
 }
 
 func run() (*driver.DB, error) {
-	// what am I going to put in the session
+	// read the .env file (variables already set in the environment win)
+	if err := loadEnv(".env"); err != nil {
+		return nil, err
+	}
+
 	gob.Register(models.Reservation{})
 	gob.Register(models.User{})
 	gob.Register(models.Room{})
@@ -78,7 +86,7 @@ func run() (*driver.DB, error) {
 
 	// connect to database
 	log.Println("Connecting to database...")
-	db, err := driver.ConnectSQL("")
+	db, err := driver.ConnectSQL(buildDSN())
 	if err != nil {
 		log.Fatal("Cannot connect to database! Dying...")
 	}
@@ -101,4 +109,87 @@ func run() (*driver.DB, error) {
 	fmt.Println(fmt.Sprintf("Staring application on port %s", portNumber))
 
 	return db, nil
+}
+
+func loadEnv(filename string) error {
+	file, err := os.Open(filename)
+	if err != nil {
+		if os.IsNotExist(err) {
+			log.Printf("No %s file found, using environment variables only", filename)
+			return nil
+		}
+		return err
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+
+		line = strings.TrimPrefix(line, "export ")
+
+		key, value, found := strings.Cut(line, "=")
+		if !found {
+			continue
+		}
+
+		key = strings.TrimSpace(key)
+		value = strings.TrimSpace(value)
+		if key == "" {
+			continue
+		}
+
+		if len(value) > 1 {
+			if (strings.HasPrefix(value, `"`) && strings.HasSuffix(value, `"`)) ||
+				(strings.HasPrefix(value, "'") && strings.HasSuffix(value, "'")) {
+				value = value[1 : len(value)-1]
+			}
+		}
+
+		if _, exists := os.LookupEnv(key); exists {
+			continue
+		}
+
+		if err := os.Setenv(key, value); err != nil {
+			return err
+		}
+	}
+
+	return scanner.Err()
+}
+
+func getEnv(key, fallback string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return fallback
+}
+
+func buildDSN() string {
+	if dsn := os.Getenv("DATABASE_URL"); dsn != "" {
+		return dsn
+	}
+
+	host := getEnv("DB_HOST", "localhost")
+	port := getEnv("DB_PORT", "5432")
+	name := getEnv("DB_NAME", "bookings")
+	user := getEnv("DB_USER", "postgres")
+	password := getEnv("DB_PASSWORD", "")
+
+	query := url.Values{}
+	query.Set("sslmode", getEnv("DB_SSL_MODE", "disable"))
+
+	dsn := url.URL{
+		Scheme:   "postgres",
+		User:     url.UserPassword(user, password),
+		Host:     net.JoinHostPort(host, port),
+		Path:     name,
+		RawQuery: query.Encode(),
+	}
+
+	return dsn.String()
 }
