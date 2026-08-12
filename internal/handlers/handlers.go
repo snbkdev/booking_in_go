@@ -307,7 +307,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		<strong>Reservation Confirmation!</strong><br>
 		Dear %s:, <br>
 		This is confirm your reservation from %s to %s
-	`, reservation.FirstName, reservation.StartDate.Format("2006-01-01"), reservation.EndDate.Format("2006-01-02"))
+	`, reservation.FirstName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"))
 
 	// send notifications - first to guest
 	msg := models.MailData{
@@ -325,7 +325,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		<strong>Reservation Notification!</strong><br>
 		Dear %s:, <br>
 		A reservation has been made for %s to %s
-	`, reservation.Room.RoomName, reservation.StartDate.Format("2006-01-01"), reservation.EndDate.Format("2006-01-02"))
+	`, reservation.Room.RoomName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"))
 
 	msg = models.MailData{
 		To:      "asanbek.best@mail.ru",
@@ -717,7 +717,10 @@ func (m *Repository) AdminPostReservationsCalendar(w http.ResponseWriter, r *htt
 				if val > 0 {
 					if !form.Has(fmt.Sprintf("remove_block_%d_%s", x.ID, name)) {
 						// delete the restriction by id
-						log.Println("would delete block", value)
+						err := m.DB.DeleteBlockByID(value)
+						if err != nil {
+							log.Println(err)
+						}
 					}
 				}
 			}
@@ -729,8 +732,16 @@ func (m *Repository) AdminPostReservationsCalendar(w http.ResponseWriter, r *htt
 		if strings.HasPrefix(name, "add_block") {
 			exploded := strings.Split(name, "_")
 			roomID, _ := strconv.Atoi(exploded[2])
+			t, err := time.Parse("2006-01-2", exploded[3])
+			if err != nil {
+				log.Println(err)
+				continue
+			}
 			// insert a new block
-			log.Println("Would insert block for room id", roomID, "for date", exploded[3])
+			err = m.DB.InsertBlockForRoom(roomID, t)
+			if err != nil {
+				log.Println(err)
+			}
 		}
 	}
 
