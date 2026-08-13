@@ -86,9 +86,13 @@ func Template(w http.ResponseWriter, r *http.Request, tmpl string, td *models.Te
 
 	td = AddDefaultData(td, r)
 
-	_ = t.Execute(buf, td)
+	err := t.Execute(buf, td)
+	if err != nil {
+		fmt.Println("error executing template", err)
+		return err
+	}
 
-	_, err := buf.WriteTo(w)
+	_, err = buf.WriteTo(w)
 	if err != nil {
 		fmt.Println("error writing template to browser", err)
 		return err

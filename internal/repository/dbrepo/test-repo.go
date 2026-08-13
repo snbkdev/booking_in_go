@@ -44,7 +44,8 @@ func (m *testDBRepo) SearchAvailabilityForAllRooms(start, end time.Time) ([]mode
 // GetRoomByID gets a room by id
 func (m *testDBRepo) GetRoomByID(id int) (models.Room, error) {
 	var room models.Room
-	if id > 2 {
+	// 1000 is reserved for the failing InsertRoomRestriction case, so it must be found here
+	if id > 2 && id != 1000 {
 		return room, errors.New("Some error")
 	}
 
