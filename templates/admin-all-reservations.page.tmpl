@@ -9,35 +9,91 @@
 {{end}}
 
 {{define "content"}}
-    <div class="col-md-12">
-        {{$res := index .Data "reservations"}}
+    {{$res := index .Data "reservations"}}
 
-        <table class="table table-striped table-hover" id="all-res">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Last Name</th>
-                    <th>Room</th>
-                    <th>Arrival</th>
-                    <th>Departure</th>
-                </tr>
-            </thead>
-            <tbody>
-            {{range $res}}
-                <tr>
-                    <td>{{.ID}}</td>
-                    <td>
-                        <a href="/admin/reservations/all/{{.ID}}/show">
-                            {{.LastName}}
-                        </a>
-                    </td>
-                    <td>{{.Room.RoomName}}</td>
-                    <td>{{humanDate .StartDate}}</td>
-                    <td>{{humanDate .EndDate}}</td>
-                </tr>
+    <div class="col-12 grid-margin">
+        <div class="fs-head">
+            <div>
+                <h2 class="fs-head__title">
+                    All reservations
+                    <span class="fs-count{{if not $res}} fs-count--muted{{end}}">{{len $res}}</span>
+                </h2>
+                <p class="fs-head__hint">
+                    Everything ever booked — processed and not, past and future. Search by last name or
+                    sort by arrival to find an old stay; click a guest to open the full record.
+                </p>
+            </div>
+            <div class="fs-head__actions">
+                <a href="/admin/reservations-new" class="fs-btn fs-btn--outline">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></svg>
+                    New only
+                </a>
+                <a href="/admin/reservations-calendar" class="fs-btn fs-btn--navy">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    Calendar
+                </a>
+            </div>
+        </div>
+
+        <div class="fs-panel fs-panel--flush">
+            {{if $res}}
+                <table class="fs-list" id="all-res">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Guest</th>
+                            <th>Room</th>
+                            <th>Arrival</th>
+                            <th>Departure</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {{range $res}}
+                        <tr>
+                            <td class="fs-id">#{{.ID}}</td>
+                            <td>
+                                <a class="fs-guest" href="/admin/reservations/all/{{.ID}}/show">
+                                    <span class="fs-avatar">{{if .LastName}}{{slice .LastName 0 1}}{{else}}?{{end}}</span>
+                                    <span class="fs-guest__name">{{.LastName}}{{if .FirstName}}, {{.FirstName}}{{end}}</span>
+                                </a>
+                            </td>
+                            <td>
+                                <span class="fs-pill {{if eq .Room.RoomName "General's Quarters"}}fs-pill--blue{{else}}fs-pill--gold{{end}}">{{.Room.RoomName}}</span>
+                            </td>
+                            <td>
+                                <span class="fs-dates">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                    {{humanDate .StartDate}}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="fs-dates">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+                                    {{humanDate .EndDate}}
+                                </span>
+                            </td>
+                            <td>
+                                {{if eq .Processed 1}}
+                                    <span class="fs-pill fs-pill--green fs-pill--dot">Processed</span>
+                                {{else}}
+                                    <span class="fs-pill fs-pill--blue fs-pill--dot">Needs review</span>
+                                {{end}}
+                            </td>
+                        </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            {{else}}
+                <div class="fs-empty">
+                    <div class="fs-empty__icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>
+                    </div>
+                    <div class="fs-empty__title">No reservations yet</div>
+                    <p>As soon as a guest books a room on the public site, the stay appears here.</p>
+                </div>
             {{end}}
-            </tbody>
-        </table>
+        </div>
     </div>
 {{end}}
 
@@ -46,6 +102,9 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function(){
+            if (!document.getElementById("all-res")) {
+                return;
+            }
             const dataTable = new simpleDatatables.DataTable("#all-res", {
                 select: 3, sort: "desc",
             })

@@ -1,28 +1,101 @@
 {{template "base" .}}
 
+{{define "title"}}Major's Suite · {{end}}
+
 {{define "content"}}
+    <section class="section">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Rooms</li>
+                    <li class="breadcrumb-item active" aria-current="page">Major's Suite</li>
+                </ol>
+            </nav>
 
-<div class="container">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <img src="/static/images/majors.jpg" class="img-fluid room-image" alt="Major's Suite">
 
-        <div class="row">
-            <div class="col">
-                <img src="/static/images/majors.jpg" class="img-fluid img-thumbnail mx-auto d-block room-image" alt="room image">
+                    <span class="eyebrow mt-4">Top floor · two rooms</span>
+                    <h1>Major's Suite</h1>
+                    <div class="rule"></div>
+                    <p class="lead-muted">
+                        The whole top floor of the house: a bedroom under the old roof beams and a separate
+                        sitting room with a sofa bed, a small kitchenette and a table big enough to eat at.
+                        Families take this one because the children can go to sleep while the adults stay up
+                        next door.
+                    </p>
+                    <p class="lead-muted">
+                        The balcony looks over the garden and, past the hedge, the lighthouse trail. The
+                        kitchenette has a fridge, a kettle, an induction hob and enough plates for four —
+                        useful if you arrive late and the village kitchen has already closed.
+                    </p>
+
+                    <h2 class="h4 mt-5">In this suite</h2>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="amenity-list">
+                                <li>Queen bed plus a full-size sofa bed</li>
+                                <li>Separate sitting room with a dining table</li>
+                                <li>Kitchenette: fridge, hob, kettle, dishes</li>
+                                <li>Balcony over the garden</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="amenity-list">
+                                <li>Private bathroom with a walk-in shower</li>
+                                <li>Cot and high chair on request, free</li>
+                                <li>Fibre Wi-Fi and a working desk</li>
+                                <li>Dogs welcome ($20 per stay)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="booking-aside mb-4">
+                        <span class="eyebrow">From</span>
+                        <div class="d-flex align-items-baseline gap-2 mb-3">
+                            <span class="h2 mb-0 text-white">$225</span>
+                            <span class="text-white-50">per night, breakfast included</span>
+                        </div>
+                        <p class="small">
+                            Rates cover two guests; each additional guest on the sofa bed is $35 per night,
+                            breakfast included. Children under 6 stay free.
+                        </p>
+                        <a id="check-availability-button" href="#!" class="btn btn-accent w-100">Check availability</a>
+                        <p class="small mb-0 mt-3 text-white-50">
+                            No prepayment · free cancellation up to 48 hours before arrival
+                        </p>
+                    </div>
+
+                    <div class="card-soft p-4">
+                        <h3 class="h6 text-uppercase fact-label mb-3">At a glance</h3>
+                        <table class="table hours-table mb-0">
+                            <tbody>
+                                <tr><td>Size</td><td>46 m², two rooms</td></tr>
+                                <tr><td>Sleeps</td><td>Up to 4 guests</td></tr>
+                                <tr><td>Beds</td><td>1 queen + sofa bed</td></tr>
+                                <tr><td>View</td><td>Garden and lighthouse trail</td></tr>
+                                <tr><td>Bathroom</td><td>Private, walk-in shower</td></tr>
+                                <tr><td>Floor</td><td>Top (two flights of stairs)</td></tr>
+                                <tr><td>Pets</td><td>Dogs allowed</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-soft p-4 mt-4">
+                        <h3 class="h6 mb-2">Travelling as a couple?</h3>
+                        <p class="text-muted small mb-3">
+                            The General's Quarters is smaller, quieter and faces the sea.
+                        </p>
+                        <a href="/generals-quarters" class="btn btn-outline-brand btn-sm">Compare with General's Quarters</a>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <h1 class="text-center mt-3">Majors Page</h1>
-                <p>Promotion an ourselves up otherwise my. High what each snug rich far yet easy. In companions inhabiting mr principles at insensible do. Heard their sex hoped enjoy vexed child for. Prosperous so occasional assistance it discovered especially no. Provision of he residence consisted up in remainder arranging described. Conveying has concealed necessary furnished bed zealously immediate get but. Terminated as middletons or by instrument. Bred do four so your felt with. No shameless principle dependent household do</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col text-center">
-                <a id="check-availability-button" href="#!" class="btn btn-success">Make Reservation Now</a>
-            </div>
-        </div>
-    </div>
+    </section>
 {{end}}
 
 

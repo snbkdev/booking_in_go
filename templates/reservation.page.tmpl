@@ -1,57 +1,131 @@
 {{template "base" .}}
 
+{{define "title"}}Make a reservation · {{end}}
+
 {{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                {{$res := index .Data "reservation"}}
-                <h1>Make a Reservation</h1>
-                <p><strong>Reservation Details</strong><br>
-                Room: {{$res.Room.RoomName}}<br>
-                Arrival: {{index .StringMap "start_date" }} <br>
-                Departure: {{index .StringMap "end_date" }} <br>
-                </p>
+    {{$res := index .Data "reservation"}}
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <ul class="step-list">
+                        <li><span>Step 1</span>Choose your dates</li>
+                        <li><span>Step 2</span>Pick a free room</li>
+                        <li class="is-active"><span>Step 3</span>Leave your details</li>
+                        <li><span>Step 4</span>Confirmation by email</li>
+                    </ul>
+                </div>
+            </div>
 
-                <form action="/make-reservation" method="post" novalidate class="needs-validation">
-                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-                    <input type="hidden" name="start_date" value="{{index .StringMap "start_date" }}">
-                    <input type="hidden" name="end_date" value="{{index .StringMap "end_date" }}">
-                    <input type="hidden" name="room_id" value="{{$res.RoomID}}">
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-7">
+                    <div class="booking-panel">
+                        <span class="eyebrow">Almost done</span>
+                        <h1 class="h2">Who's coming to stay?</h1>
+                        <p class="text-muted">
+                            We need a name to put on the door and a way to reach you if anything changes.
+                            Nothing is charged now — you pay at the house on departure.
+                        </p>
 
-                    <div class="form-group mt-3">
-                        <label for="first_name">First Name:</label>
-                        {{with .Form.Errors.Get "first_name"}}
-                            <label class="text-danger">{{.}}</label>
+                        {{if .Form.Errors}}
+                            <div class="alert alert-danger" role="alert">
+                                Please check the highlighted fields below and send the form again.
+                            </div>
                         {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "first_name"}} is-invalid {{end}}" id="first_name" autocomplete="off" value="{{$res.FirstName}}" type='text' name='first_name'>
+
+                        <form action="/make-reservation" method="post" novalidate class="needs-validation">
+                            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                            <input type="hidden" name="start_date" value="{{index .StringMap "start_date"}}">
+                            <input type="hidden" name="end_date" value="{{index .StringMap "end_date"}}">
+                            <input type="hidden" name="room_id" value="{{$res.RoomID}}">
+
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label">First name</label>
+                                    <input class="form-control {{with .Form.Errors.Get "first_name"}}is-invalid{{end}}"
+                                           id="first_name" name="first_name" type="text"
+                                           value="{{$res.FirstName}}" autocomplete="given-name"
+                                           required minlength="3">
+                                    {{with .Form.Errors.Get "first_name"}}
+                                        <div class="text-danger small mt-1">{{.}}</div>
+                                    {{end}}
+                                    <div class="invalid-feedback">At least 3 characters, please.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label">Last name</label>
+                                    <input class="form-control {{with .Form.Errors.Get "last_name"}}is-invalid{{end}}"
+                                           id="last_name" name="last_name" type="text"
+                                           value="{{$res.LastName}}" autocomplete="family-name" required>
+                                    {{with .Form.Errors.Get "last_name"}}
+                                        <div class="text-danger small mt-1">{{.}}</div>
+                                    {{end}}
+                                    <div class="invalid-feedback">Please tell us your last name.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input class="form-control {{with .Form.Errors.Get "email"}}is-invalid{{end}}"
+                                           id="email" name="email" type="email"
+                                           value="{{$res.Email}}" autocomplete="email" required>
+                                    {{with .Form.Errors.Get "email"}}
+                                        <div class="text-danger small mt-1">{{.}}</div>
+                                    {{end}}
+                                    <div class="invalid-feedback">We need a valid email for the confirmation.</div>
+                                    <div class="form-text">Your confirmation is sent here within a few hours.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input class="form-control {{with .Form.Errors.Get "phone"}}is-invalid{{end}}"
+                                           id="phone" name="phone" type="tel"
+                                           value="{{$res.Phone}}" autocomplete="tel">
+                                    {{with .Form.Errors.Get "phone"}}
+                                        <div class="text-danger small mt-1">{{.}}</div>
+                                    {{end}}
+                                    <div class="form-text">Only used if we need to reach you on the day of arrival.</div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <button type="submit" class="btn btn-brand btn-lg w-100">Make reservation</button>
+                            <p class="text-muted small text-center mb-0 mt-3">
+                                By sending the form you agree to our house rules and cancellation policy.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="booking-aside mb-4">
+                        <span class="eyebrow">Your stay</span>
+                        <h2 class="h4 mb-4">{{$res.Room.RoomName}}</h2>
+                        <dl class="mb-0">
+                            <dt>Arrival</dt>
+                            <dd>{{index .StringMap "start_date"}}, from 15:00</dd>
+                            <dt>Departure</dt>
+                            <dd>{{index .StringMap "end_date"}}, until 11:00</dd>
+                            <dt>Included</dt>
+                            <dd class="mb-0">Breakfast, parking, Wi-Fi and taxes</dd>
+                        </dl>
                     </div>
 
-                    <div class="form-group">
-                        <label for="last_name">Last Name:</label>
-                        {{with .Form.Errors.Get "last_name"}}
-                            <label class="text-danger">{{.}}</label>
-                        {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "last_name"}} is-invalid {{end}}" id="last_name" autocomplete="off" type='text' value="{{$res.LastName}}" name='last_name'>
+                    <div class="card-soft p-4">
+                        <h3 class="h6 mb-3">What happens next</h3>
+                        <ul class="amenity-list mb-0">
+                            <li>We check the booking and email you a confirmation</li>
+                            <li>No card details and no prepayment required</li>
+                            <li>Free cancellation up to 48 hours before arrival</li>
+                            <li>Special diet or a late arrival? Reply to that email</li>
+                        </ul>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        {{with .Form.Errors.Get "email"}}
-                            <label class="text-danger">{{.}}</label>
-                        {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}" id="email" autocomplete="off" type='email' value="{{$res.Email}}" name='email'>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Phone:</label>
-                        {{with .Form.Errors.Get "phone"}}
-                            <label class="text-danger">{{.}}</label>
-                        {{end}}
-                        <input class="form-control {{with .Form.Errors.Get "phone"}} is-invalid {{end}}" id="phone" autocomplete="off" type='text' value="{{$res.Phone}}" name='phone'>
-                    </div>
-                    <hr>
-                    <button type="submit" class="btn btn-primary">Make Reservation</button>
-                </form>
+                    <p class="text-muted small mt-4 mb-0">
+                        Wrong dates or room? <a href="/search-availability">Start a new search</a>.
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 {{end}}

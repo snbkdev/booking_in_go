@@ -1,11 +1,161 @@
 {{template "base" .}}
 
+{{define "title"}}Contact · {{end}}
+
 {{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>This is the contact page</h1>
+    <header class="page-hero" style="background-image: url('/static/images/coffee.jpg');">
+        <div class="container">
+            <span class="eyebrow">Get in touch</span>
+            <h1>Talk to the people who run the house</h1>
+            <p class="mb-0">
+                No call centre and no chatbot — the phone rings in the kitchen. Ask about dates,
+                dietary requirements, dogs, late arrivals or how to get here without a car.
+            </p>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-tile">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.08 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+                        </div>
+                        <h3 class="h6">Phone</h3>
+                        <a href="tel:+19025551212">+1 (902) 555-1212</a>
+                        <p class="text-muted mb-0 mt-2 small">Daily, 8:00 – 21:00 (Atlantic time)</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-tile">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+                        </div>
+                        <h3 class="h6">Email</h3>
+                        <a href="mailto:stay@fortsmyth.ca">stay@fortsmyth.ca</a>
+                        <p class="text-muted mb-0 mt-2 small">We reply within a few hours</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-tile">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </div>
+                        <h3 class="h6">Address</h3>
+                        <p class="mb-0">100 Rocky Road<br>Northern Nova Scotia<br>Canada, B0K 1A0</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="contact-tile">
+                        <div class="feature-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                        </div>
+                        <h3 class="h6">Reception hours</h3>
+                        <table class="table hours-table mb-0 small">
+                            <tbody>
+                                <tr><td>Check-in</td><td>15:00 – 21:00</td></tr>
+                                <tr><td>Check-out</td><td>until 11:00</td></tr>
+                                <tr><td>Breakfast</td><td>08:00 – 10:30</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="section section-soft">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <span class="eyebrow">Getting here</span>
+                    <h2>How to find us</h2>
+                    <div class="rule"></div>
+                    <ul class="amenity-list">
+                        <li><strong>By car</strong> — Highway 6 to exit 14, then 4 km along the coast road. Off-street parking for two cars in front of the house.</li>
+                        <li><strong>By train</strong> — nearest station is 18 km away; tell us your arrival time and we'll have a taxi waiting (about $30).</li>
+                        <li><strong>By air</strong> — Halifax Stanfield (YHZ) is a 2-hour drive. Car rental at the airport is the simplest option.</li>
+                        <li><strong>Landmark</strong> — the last stone house before the lighthouse trail; the blue door faces the water.</li>
+                    </ul>
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <a href="mailto:stay@fortsmyth.ca?subject=Question%20about%20a%20stay" class="btn btn-brand">Write to us</a>
+                        <a href="/search-availability" class="btn btn-outline-brand">Check availability</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <span class="eyebrow">Before you ask</span>
+                    <h2>Frequently asked</h2>
+                    <div class="rule"></div>
+                    <div class="accordion" id="contactFaq">
+                        <div class="accordion-item">
+                            <h3 class="accordion-header" id="faq1">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqAnswer1" aria-expanded="false" aria-controls="faqAnswer1">
+                                    Do I have to pay when I book?
+                                </button>
+                            </h3>
+                            <div id="faqAnswer1" class="accordion-collapse collapse" aria-labelledby="faq1" data-bs-parent="#contactFaq">
+                                <div class="accordion-body text-muted">
+                                    No. Bookings made on this site are confirmed without prepayment — you
+                                    settle the whole stay on departure, by card or cash.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header" id="faq2">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqAnswer2" aria-expanded="false" aria-controls="faqAnswer2">
+                                    Can we arrive after 21:00?
+                                </button>
+                            </h3>
+                            <div id="faqAnswer2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#contactFaq">
+                                <div class="accordion-body text-muted">
+                                    Yes, but let us know in advance and we'll leave a key box code in your
+                                    confirmation email.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header" id="faq3">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqAnswer3" aria-expanded="false" aria-controls="faqAnswer3">
+                                    Is breakfast really included?
+                                </button>
+                            </h3>
+                            <div id="faqAnswer3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#contactFaq">
+                                <div class="accordion-body text-muted">
+                                    It is, for every guest and every night. Tell us about allergies or a
+                                    vegan diet the day before and we'll cook around it.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header" id="faq4">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqAnswer4" aria-expanded="false" aria-controls="faqAnswer4">
+                                    Can we bring the dog?
+                                </button>
+                            </h3>
+                            <div id="faqAnswer4" class="accordion-collapse collapse" aria-labelledby="faq4" data-bs-parent="#contactFaq">
+                                <div class="accordion-body text-muted">
+                                    Dogs are welcome in the Major's Suite for $20 per stay. The General's
+                                    Quarters is kept pet-free for guests with allergies.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h3 class="accordion-header" id="faq5">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqAnswer5" aria-expanded="false" aria-controls="faqAnswer5">
+                                    How do I change or cancel a reservation?
+                                </button>
+                            </h3>
+                            <div id="faqAnswer5" class="accordion-collapse collapse" aria-labelledby="faq5" data-bs-parent="#contactFaq">
+                                <div class="accordion-body text-muted">
+                                    Reply to your confirmation email or call us. Cancellation is free up to
+                                    48 hours before the arrival date.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {{end}}

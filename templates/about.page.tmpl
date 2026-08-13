@@ -1,11 +1,162 @@
 {{template "base" .}}
 
+{{define "title"}}About the house · {{end}}
+
 {{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>This is the about page</h1>
+    <header class="page-hero" style="background-image: url('/static/images/house.jpg');">
+        <div class="container">
+            <span class="eyebrow">Since 1876</span>
+            <h1>The house, the harbour and the people who keep it</h1>
+            <p class="mb-0">
+                Fort Smyth was a customs officer's house long before it took in its first guest.
+                Here's what it is today, and what a stay actually looks like.
+            </p>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <span class="eyebrow">Our story</span>
+                    <h2>A stone house that refused to fall down</h2>
+                    <div class="rule"></div>
+                    <p class="lead-muted">
+                        The house was built in 1876 for the customs officer who logged every ship coming
+                        into the harbour. When the port moved south the building was left to the weather
+                        for the better part of forty years — roof gone, chimneys down, birds in the stairwell.
+                    </p>
+                    <p class="lead-muted">
+                        We bought it in 2017 and spent two years putting it back: the original beams and
+                        floorboards where they survived, new insulation and plumbing everywhere else. The
+                        first guests arrived in the spring of 2019, and the guest book from that season is
+                        still on the shelf in the hallway.
+                    </p>
+                    <p class="lead-muted">
+                        Today it is run by two people — we cook the breakfast, make the beds and answer the
+                        phone. That is also why there are only two rooms: it is exactly as much as we can
+                        look after properly.
+                    </p>
+                </div>
+                <div class="col-lg-5">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <img src="/static/images/coffee.jpg" class="gallery-img" alt="Breakfast table">
+                        </div>
+                        <div class="col-6">
+                            <img src="/static/images/generals.jpg" class="gallery-img" alt="General's Quarters">
+                        </div>
+                        <div class="col-6">
+                            <img src="/static/images/majors.jpg" class="gallery-img" alt="Major's Suite">
+                        </div>
+                        <div class="col-6">
+                            <img src="/static/images/laptop.webp" class="gallery-img" alt="A place to work">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section class="section section-soft">
+        <div class="container">
+            <div class="text-center mb-5">
+                <span class="eyebrow">How we run it</span>
+                <h2>Three things we don't compromise on</h2>
+                <div class="rule rule-center"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card-soft feature-card">
+                        <h3 class="h5">Breakfast is cooked, not laid out</h3>
+                        <p class="text-muted mb-0">
+                            Eggs from the farm up the road, bread baked the same morning, jam from the
+                            garden. You order at the table; nothing sits under a heat lamp.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-soft feature-card">
+                        <h3 class="h5">Two rooms, and that's the limit</h3>
+                        <p class="text-muted mb-0">
+                            Four guests at most. No group bookings, no conference rates. The sitting room
+                            and the porch are effectively yours for the evening.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-soft feature-card">
+                        <h3 class="h5">The price you see is the price</h3>
+                        <p class="text-muted mb-0">
+                            Breakfast, parking, internet and taxes are all in the nightly rate. No resort
+                            fee, no charge for a second towel.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <span class="eyebrow">Good to know</span>
+                    <h2>House rules</h2>
+                    <div class="rule"></div>
+                    <table class="table hours-table">
+                        <tbody>
+                            <tr>
+                                <td>Check-in</td>
+                                <td>15:00 – 21:00 (later by arrangement)</td>
+                            </tr>
+                            <tr>
+                                <td>Check-out</td>
+                                <td>until 11:00</td>
+                            </tr>
+                            <tr>
+                                <td>Breakfast</td>
+                                <td>08:00 – 10:30, included</td>
+                            </tr>
+                            <tr>
+                                <td>Quiet hours</td>
+                                <td>22:00 – 08:00</td>
+                            </tr>
+                            <tr>
+                                <td>Children</td>
+                                <td>Welcome; cot available free of charge</td>
+                            </tr>
+                            <tr>
+                                <td>Pets</td>
+                                <td>Dogs in the Major's Suite, $20 per stay</td>
+                            </tr>
+                            <tr>
+                                <td>Smoking</td>
+                                <td>Outside only, in the garden</td>
+                            </tr>
+                            <tr>
+                                <td>Cancellation</td>
+                                <td>Free up to 48 hours before arrival</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-lg-6">
+                    <span class="eyebrow">Around the house</span>
+                    <h2>What's within walking distance</h2>
+                    <div class="rule"></div>
+                    <ul class="amenity-list">
+                        <li><strong>The beach</strong> — 400 m down the path behind the garden</li>
+                        <li><strong>Harbour and fish market</strong> — 10 minutes on foot, mornings only</li>
+                        <li><strong>The old fort and lighthouse trail</strong> — 2 km loop along the cliffs</li>
+                        <li><strong>Village bakery and pub</strong> — 700 m, kitchen open until 21:00</li>
+                        <li><strong>Kayak rental</strong> — at the marina, book a day ahead in summer</li>
+                        <li><strong>Nearest town and train station</strong> — 18 km, we can arrange a taxi</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-outline-brand mt-3">Ask us anything</a>
+                    <a href="/search-availability" class="btn btn-brand mt-3 ms-2">Check dates</a>
+                </div>
+            </div>
+        </div>
+    </section>
 {{end}}

@@ -5,7 +5,150 @@
 {{end}}
 
 {{define "content"}}
-    <div class="col-md-12">
-        Dashboard content
+    <div class="col-12 grid-margin">
+        <div class="fs-hero">
+            <span class="fs-hero__eyebrow">Fort Smyth · staff area</span>
+            <h2>Everything about the house in one place</h2>
+            <p>
+                Bookings made on the public site land here the moment a guest sends the form. Work
+                through the new ones, keep an eye on the calendar, and block the days when a room
+                cannot be sold.
+            </p>
+            <div class="fs-hero__actions">
+                <a href="/admin/reservations-new" class="fs-btn fs-btn--gold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></svg>
+                    Go to new reservations
+                </a>
+                <a href="/admin/reservations-calendar" class="fs-btn fs-btn--ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    Open the calendar
+                </a>
+                <a href="/" class="fs-btn fs-btn--ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M10 21v-6h4v6"/></svg>
+                    View the public site
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 grid-margin stretch-card">
+        <a href="/admin/reservations-new" class="fs-tile fs-tile--new">
+            <span class="fs-tile__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></svg>
+            </span>
+            <span>
+                <span class="fs-tile__title">New Reservations</span>
+                <p class="fs-tile__text">
+                    Bookings nobody has looked at yet. Open one to check the guest's details, fix a typo
+                    in the name, mark it processed or delete it.
+                </p>
+                <span class="fs-tile__link">Open the list &rarr;</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="col-md-4 grid-margin stretch-card">
+        <a href="/admin/reservations-all" class="fs-tile fs-tile--all">
+            <span class="fs-tile__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            </span>
+            <span>
+                <span class="fs-tile__title">All Reservations</span>
+                <p class="fs-tile__text">
+                    The whole history — processed and not, past and future. Sort by arrival date or search
+                    by last name to find an old stay.
+                </p>
+                <span class="fs-tile__link">Open the list &rarr;</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="col-md-4 grid-margin stretch-card">
+        <a href="/admin/reservations-calendar" class="fs-tile fs-tile--calendar">
+            <span class="fs-tile__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg>
+            </span>
+            <span>
+                <span class="fs-tile__title">Reservation Calendar</span>
+                <p class="fs-tile__text">
+                    Month by month, room by room. Tick a day to block it, untick to release it; days held
+                    by a guest booking are shown but locked.
+                </p>
+                <span class="fs-tile__link">Open the calendar &rarr;</span>
+            </span>
+        </a>
+    </div>
+
+    <div class="col-lg-7 grid-margin stretch-card">
+        <div class="fs-panel">
+            <div class="fs-panel__title">How a booking travels through the system</div>
+            <p class="fs-panel__hint">From the guest pressing the button to the room being blocked.</p>
+            <ol class="fs-flow">
+                <li>
+                    <span class="fs-flow__num">1</span>
+                    <div class="fs-flow__title">The guest picks dates on the public site</div>
+                    <p class="fs-flow__text">Only rooms that are free for the whole range are offered.</p>
+                </li>
+                <li>
+                    <span class="fs-flow__num">2</span>
+                    <div class="fs-flow__title">The reservation is saved</div>
+                    <p class="fs-flow__text">A room restriction is written at the same time, so the nights stop being sold.</p>
+                </li>
+                <li>
+                    <span class="fs-flow__num">3</span>
+                    <div class="fs-flow__title">Two emails go out</div>
+                    <p class="fs-flow__text">A confirmation to the guest and a notification to the house mailbox.</p>
+                </li>
+                <li>
+                    <span class="fs-flow__num">4</span>
+                    <div class="fs-flow__title">Staff process it</div>
+                    <p class="fs-flow__text">Open it under New Reservations, check the details, mark it processed — it leaves the new list.</p>
+                </li>
+                <li>
+                    <span class="fs-flow__num">5</span>
+                    <div class="fs-flow__title">Changes and cancellations</div>
+                    <p class="fs-flow__text">Editing updates the guest's details; deleting removes the booking and frees the nights it held.</p>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="col-lg-5 grid-margin stretch-card">
+        <div class="fs-panel">
+            <div class="fs-panel__title">Rooms and rates</div>
+            <p class="fs-panel__hint">What the public site is currently selling.</p>
+            <table class="fs-table">
+                <thead>
+                    <tr>
+                        <th>Room</th>
+                        <th>Sleeps</th>
+                        <th class="text-right">Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="fs-room">General's Quarters<small>First floor · sea view</small></td>
+                        <td>2</td>
+                        <td class="text-right"><span class="fs-badge">$189</span></td>
+                    </tr>
+                    <tr>
+                        <td class="fs-room">Major's Suite<small>Top floor · two rooms</small></td>
+                        <td>up to 4</td>
+                        <td class="text-right"><span class="fs-badge fs-badge--gold">$225</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="mt-4">
+                <div class="fs-note">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    <span>Rates include breakfast, parking, Wi-Fi and taxes. Extra guest on the sofa bed $35 per night, dog in the suite $20 per stay.</span>
+                </div>
+                <div class="fs-note fs-note--warn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+                    <span>Deleting a reservation also releases the nights it held, and there is no undo — use it for real cancellations only.</span>
+                </div>
+            </div>
+        </div>
     </div>
 {{end}}

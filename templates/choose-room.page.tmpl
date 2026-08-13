@@ -1,19 +1,93 @@
 {{template "base" .}}
 
-{{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>Choose a Room</h1>
+{{define "title"}}Choose a room · {{end}}
 
-                {{$rooms := index .Data "rooms"}}
-                
-                <ul>
-                    {{range $rooms}}
-                        <li><a href="/choose-room/{{.ID}}">{{.RoomName}}</a></li>
-                    {{end}}
-                </ul>
+{{define "content"}}
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <ul class="step-list">
+                        <li><span>Step 1</span>Choose your dates</li>
+                        <li class="is-active"><span>Step 2</span>Pick a free room</li>
+                        <li><span>Step 3</span>Leave your details</li>
+                        <li><span>Step 4</span>Confirmation by email</li>
+                    </ul>
+                </div>
             </div>
+
+            <div class="text-center mb-5">
+                <span class="eyebrow">Available for your dates</span>
+                <h1>Choose a room</h1>
+                <div class="rule rule-center"></div>
+                <p class="lead-muted mx-auto" style="max-width: 40rem;">
+                    These rooms are free for the nights you picked. Selecting one takes you to the last
+                    step — your name and contact details. Nothing is charged now.
+                </p>
+            </div>
+
+            {{$rooms := index .Data "rooms"}}
+
+            <div class="row g-4 justify-content-center">
+                {{range $rooms}}
+                    <div class="col-md-6 col-lg-5">
+                        <div class="card-soft room-card">
+                            {{if eq .ID 2}}
+                                <img src="/static/images/generals.jpg" alt="{{.RoomName}}">
+                            {{else if eq .ID 3}}
+                                <img src="/static/images/majors.jpg" alt="{{.RoomName}}">
+                            {{else}}
+                                <img src="/static/images/house.jpg" alt="{{.RoomName}}">
+                            {{end}}
+
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h2 class="h4 mb-0">{{.RoomName}}</h2>
+                                    {{if eq .ID 2}}
+                                        <span class="price-tag">$189<small>/night</small></span>
+                                    {{else if eq .ID 3}}
+                                        <span class="price-tag">$225<small>/night</small></span>
+                                    {{end}}
+                                </div>
+
+                                {{if eq .ID 2}}
+                                    <p class="text-muted">
+                                        Corner room on the first floor with a king bed, a working fireplace
+                                        and three windows over the harbour.
+                                    </p>
+                                    <ul class="amenity-list mb-4">
+                                        <li>32 m² · sleeps 2 · sea view</li>
+                                        <li>Claw-foot tub and rainfall shower</li>
+                                        <li>Breakfast, parking and Wi-Fi included</li>
+                                    </ul>
+                                {{else if eq .ID 3}}
+                                    <p class="text-muted">
+                                        The whole top floor — bedroom, separate sitting room with a sofa bed,
+                                        kitchenette and a balcony over the garden.
+                                    </p>
+                                    <ul class="amenity-list mb-4">
+                                        <li>46 m² · sleeps up to 4 · two rooms</li>
+                                        <li>Kitchenette and dining table</li>
+                                        <li>Breakfast, parking and Wi-Fi included</li>
+                                    </ul>
+                                {{else}}
+                                    <ul class="amenity-list mb-4">
+                                        <li>Breakfast, parking and Wi-Fi included</li>
+                                        <li>Free cancellation up to 48 hours before arrival</li>
+                                    </ul>
+                                {{end}}
+
+                                <a href="/choose-room/{{.ID}}" class="btn btn-brand w-100">Book this room</a>
+                            </div>
+                        </div>
+                    </div>
+                {{end}}
+            </div>
+
+            <p class="text-center text-muted small mt-4 mb-0">
+                Changed your mind about the dates?
+                <a href="/search-availability">Start a new search</a>.
+            </p>
         </div>
-    </div>
+    </section>
 {{end}}

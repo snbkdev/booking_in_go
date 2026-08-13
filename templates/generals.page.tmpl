@@ -1,26 +1,102 @@
 {{template "base" .}}
 
+{{define "title"}}General's Quarters · {{end}}
+
 {{define "content"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <img src="/static/images/generals.jpg" class="img-fluid img-thumbnail mx-auto d-block room-image" alt="room image">
-            </div>
-        </div>
+    <section class="section">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb small">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item">Rooms</li>
+                    <li class="breadcrumb-item active" aria-current="page">General's Quarters</li>
+                </ol>
+            </nav>
 
-        <div class="row">
-            <div class="col">
-                <h1 class="text-center mt-3">Generals page</h1>
-                <p>Promotion an ourselves up otherwise my. High what each snug rich far yet easy. In companions inhabiting mr principles at insensible do. Heard their sex hoped enjoy vexed child for. Prosperous so occasional assistance it discovered especially no. Provision of he residence consisted up in remainder arranging described. Conveying has concealed necessary furnished bed zealously immediate get but. Terminated as middletons or by instrument. Bred do four so your felt with. No shameless principle dependent household do</p>
-            </div>
-        </div>
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <img src="/static/images/generals.jpg" class="img-fluid room-image" alt="General's Quarters">
 
-        <div class="row">
-            <div class="col text-center">
-                <a id="check-availability-button" href="#!" class="btn btn-success">Check Availability</a>
+                    <span class="eyebrow mt-4">First floor · sea view</span>
+                    <h1>General's Quarters</h1>
+                    <div class="rule"></div>
+                    <p class="lead-muted">
+                        The old customs officer's own room, on the corner of the house where three windows
+                        catch the harbour. A king bed faces the fireplace, which we still light on cold
+                        evenings, and the reading chair by the middle window is where most guests end up
+                        spending the afternoon.
+                    </p>
+                    <p class="lead-muted">
+                        The bathroom is private and original to the 1919 renovation — a claw-foot tub, a
+                        rainfall shower added later, and heated floors so the tiles are never cold. Because
+                        the room sits at the front of the house, mornings start with the light off the water
+                        rather than an alarm.
+                    </p>
+
+                    <h2 class="h4 mt-5">In this room</h2>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="amenity-list">
+                                <li>King bed with a wool mattress topper</li>
+                                <li>Working wood fireplace, wood included</li>
+                                <li>Claw-foot tub and rainfall shower</li>
+                                <li>Heated bathroom floor</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="amenity-list">
+                                <li>Desk with a harbour view, fibre Wi-Fi</li>
+                                <li>Kettle, French press and fresh coffee</li>
+                                <li>Blackout curtains and a fan for summer</li>
+                                <li>Bathrobes, slippers and beach towels</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="booking-aside mb-4">
+                        <span class="eyebrow">From</span>
+                        <div class="d-flex align-items-baseline gap-2 mb-3">
+                            <span class="h2 mb-0 text-white">$189</span>
+                            <span class="text-white-50">per night, breakfast included</span>
+                        </div>
+                        <p class="small">
+                            Rates cover two guests, breakfast, parking, Wi-Fi and taxes. Minimum stay of two
+                            nights on summer weekends.
+                        </p>
+                        <a id="check-availability-button" href="#!" class="btn btn-accent w-100">Check availability</a>
+                        <p class="small mb-0 mt-3 text-white-50">
+                            No prepayment · free cancellation up to 48 hours before arrival
+                        </p>
+                    </div>
+
+                    <div class="card-soft p-4">
+                        <h3 class="h6 text-uppercase fact-label mb-3">At a glance</h3>
+                        <table class="table hours-table mb-0">
+                            <tbody>
+                                <tr><td>Size</td><td>32 m²</td></tr>
+                                <tr><td>Sleeps</td><td>2 guests</td></tr>
+                                <tr><td>Bed</td><td>1 king</td></tr>
+                                <tr><td>View</td><td>Harbour and open sea</td></tr>
+                                <tr><td>Bathroom</td><td>Private, en-suite</td></tr>
+                                <tr><td>Floor</td><td>First (one flight of stairs)</td></tr>
+                                <tr><td>Pets</td><td>Not in this room</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card-soft p-4 mt-4">
+                        <h3 class="h6 mb-2">Not quite what you need?</h3>
+                        <p class="text-muted small mb-3">
+                            The Major's Suite has a separate sitting room and sleeps up to four.
+                        </p>
+                        <a href="/majors-suite" class="btn btn-outline-brand btn-sm">Compare with Major's Suite</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 {{end}}
 
 

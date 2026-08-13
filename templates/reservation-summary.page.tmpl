@@ -1,43 +1,96 @@
 {{template "base" .}}
 
+{{define "title"}}Reservation confirmed · {{end}}
+
 {{define "content"}}
     {{$res := index .Data "reservation"}}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1 class="mt-5">Reservation Summary</h1>
-                <hr>
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <ul class="step-list">
+                        <li><span>Step 1</span>Choose your dates</li>
+                        <li><span>Step 2</span>Pick a free room</li>
+                        <li><span>Step 3</span>Leave your details</li>
+                        <li class="is-active"><span>Step 4</span>Confirmation by email</li>
+                    </ul>
+                </div>
+            </div>
 
-                <table class="table table-striped">
-                    <thead></thead>
-                    <tbody>
-                        <tr>
-                            <td>Name:</td>
-                            <td>{{$res.FirstName}} {{$res.LastName}}</td>
-                        </tr>
-                        <tr>
-                            <td>Room:</td>
-                            <td>{{$res.Room.RoomName}}</td>
-                        </tr>
-                        <tr>
-                            <td>Arrival:</td>
-                            <td>{{index .StringMap "start_date"}}</td>
-                        </tr>
-                        <tr>
-                            <td>Departure:</td>
-                            <td>{{index .StringMap "end_date"}}</td>
-                        </tr>
-                        <tr>
-                            <td>Email:</td>
-                            <td>{{$res.Email}}</td>
-                        </tr>
-                        <tr>
-                            <td>Phone:</td>
-                            <td>{{$res.Phone}}</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-7">
+                    <div class="summary-card">
+                        <div class="summary-card__head">
+                            <span class="eyebrow">Reservation received</span>
+                            <h1 class="h3">Thank you, {{$res.FirstName}} — your room is booked</h1>
+                            <p class="mb-0 text-white-50">
+                                A confirmation has been sent to {{$res.Email}}. If it hasn't arrived within
+                                a few hours, check the spam folder or call us.
+                            </p>
+                        </div>
+
+                        <table class="table table-striped mb-0">
+                            <tbody>
+                                <tr>
+                                    <th>Guest</th>
+                                    <td>{{$res.FirstName}} {{$res.LastName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Room</th>
+                                    <td>{{$res.Room.RoomName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Arrival</th>
+                                    <td>{{index .StringMap "start_date"}} — check-in from 15:00</td>
+                                </tr>
+                                <tr>
+                                    <th>Departure</th>
+                                    <td>{{index .StringMap "end_date"}} — check-out until 11:00</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{$res.Email}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>{{if $res.Phone}}{{$res.Phone}}{{else}}—{{end}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Payment</th>
+                                    <td>On departure, at the house — card or cash</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+                        <a href="/" class="btn btn-brand">Back to the home page</a>
+                        <a href="/contact" class="btn btn-outline-brand">Contact us about this booking</a>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card-soft p-4 mb-4">
+                        <h2 class="h5">Before you arrive</h2>
+                        <ul class="amenity-list mt-3 mb-0">
+                            <li>Tell us about allergies or a vegan diet at least a day ahead</li>
+                            <li>Arriving after 21:00? Ask us for the key box code</li>
+                            <li>Parking is in front of the house, two spaces</li>
+                            <li>Cancellation is free up to 48 hours before arrival</li>
+                        </ul>
+                    </div>
+
+                    <div class="booking-aside">
+                        <span class="eyebrow">Need to change something?</span>
+                        <p class="mb-3">
+                            Reply to the confirmation email or call us — we handle changes ourselves, no
+                            fees and no forms.
+                        </p>
+                        <p class="mb-1"><a href="tel:+19025551212" class="text-white">+1 (902) 555-1212</a></p>
+                        <p class="mb-0"><a href="mailto:stay@fortsmyth.ca" class="text-white">stay@fortsmyth.ca</a></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 {{end}}

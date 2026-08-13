@@ -10,70 +10,102 @@
     {{$dim := index .IntMap "days_in_month"}}
     {{$curMonth := index .StringMap "this_month"}}
     {{$curYear := index .StringMap "this_month_year"}}
-    <div class="col-md-12">
-        <div class="text-center">
-            <h3>{{formatDate $now "January"}} {{formatDate $now "2006"}}</h3>
+
+    <div class="col-12 grid-margin">
+        <div class="fs-head">
+            <div>
+                <h2 class="fs-head__title">Reservation calendar</h2>
+                <p class="fs-head__hint">
+                    A month at a time, room by room. Tick a day to block it — repairs, off-season, family
+                    staying over — and untick to put it back on sale. Days held by a guest booking are
+                    marked <strong>R</strong> and can only be changed from the reservation itself.
+                </p>
+            </div>
+            <div class="fs-head__actions">
+                <a href="/admin/reservations-calendar" class="fs-btn fs-btn--outline">Today</a>
+                <a href="/admin/reservations-new" class="fs-btn fs-btn--navy">New reservations</a>
+            </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="float-left">
-                <a class="btn btn-sm btn-outline-secondary" href="/admin/reservations-calendar?y={{index .StringMap "last_month_year"}}&m={{index .StringMap "last_month"}}">&lt;&lt;</a>
-            </div>
+        <div class="fs-cal-head">
+            <a class="fs-nav-btn" href="/admin/reservations-calendar?y={{index .StringMap "last_month_year"}}&m={{index .StringMap "last_month"}}" aria-label="Previous month">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </a>
 
-            <div class="float-right">
-                <a class="btn btn-sm btn-outline-secondary" href="/admin/reservations-calendar?y={{index .StringMap "next_month_year"}}&m={{index .StringMap "next_month"}}">&gt;&gt;</a>
-            </div>
+            <h3 class="fs-cal-month">
+                {{formatDate $now "January"}} {{formatDate $now "2006"}}
+                <small>{{$dim}} days</small>
+            </h3>
+
+            <a class="fs-nav-btn" href="/admin/reservations-calendar?y={{index .StringMap "next_month_year"}}&m={{index .StringMap "next_month"}}" aria-label="Next month">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
         </div>
-    
-    <form method="post" action="/admin/reservations-calendar">
-        <input type="hidden" name="csrf_token" value={{.CSRFToken}}>
-        <input type="hidden" name="m" value={{index .StringMap "this_month"}}>
-        <input type="hidden" name="y" value={{index .StringMap "this_month_year"}}>
-        {{range $rooms}}
-            {{$roomID := .ID}}
-            {{$blocks := index $.Data (printf "block_map_%d" .ID)}}
-            {{$reservations := index $.Data (printf "reservation_map_%d" .ID)}}
 
-            <h4 class="mt-4">{{.RoomName}}</h4>
+        <div class="fs-legend">
+            <span><i class="is-free"></i> Free — on sale</span>
+            <span><i class="is-blocked"></i> Blocked by staff</span>
+            <span><i class="is-reserved"></i> Taken by a guest booking</span>
+        </div>
 
-            <div class="table-response">
-                <table class="table table-bordered table-sm">
-                    <tr class="table-dark">
-                        {{range $index := iterate $dim}}
-                            <td class="text-center">
-                                {{add $index 1}}
-                            </td>
-                        {{end}}
-                    </tr>
+        <form method="post" action="/admin/reservations-calendar">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <input type="hidden" name="m" value="{{index .StringMap "this_month"}}">
+            <input type="hidden" name="y" value="{{index .StringMap "this_month_year"}}">
 
-                    <tr>
-                        {{range $index := iterate $dim}}
-                            <td class="text-center">
-                                {{if gt (index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0}}
-                                    <a href="/admin/reservations/cal/{{index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}/show?y={{$curYear}}&m={{$curMonth}}">
-                                        <span class="text-danger">R</span>
-                                    </a>
-                                {{else}}
-                                <input 
-                                    {{if gt (index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0 }}
-                                        checked
-                                        name="remove_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}"
-                                        value="{{index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}"
+            {{range $rooms}}
+                {{$roomID := .ID}}
+                {{$blocks := index $.Data (printf "block_map_%d" .ID)}}
+                {{$reservations := index $.Data (printf "reservation_map_%d" .ID)}}
 
-                                    {{else}}
-                                        name="add_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}" value="1"
-                                    {{end}}
-                                    type="checkbox">
+                <div class="fs-panel fs-panel--flush mb-4">
+                    <div class="fs-room-head">
+                        <h4>{{.RoomName}}</h4>
+                        <span class="fs-pill {{if eq .RoomName "General's Quarters"}}fs-pill--blue{{else}}fs-pill--gold{{end}}">Room #{{.ID}}</span>
+                    </div>
+
+                    <div class="fs-cal-scroll">
+                        <table class="fs-cal">
+                            <tr>
+                                {{range $index := iterate $dim}}
+                                    <td class="fs-cal__day">{{add $index 1}}</td>
                                 {{end}}
-                            </td>
-                        {{end}}
-                    </tr>
-                </table>
-            </div>
+                            </tr>
 
-        {{end}}
-        <hr>
-        <input type="submit" class="btn btn-primary" value="Save Changes"> 
-    </form>
+                            <tr>
+                                {{range $index := iterate $dim}}
+                                    <td class="fs-cal__cell">
+                                        {{if gt (index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0}}
+                                            <a class="fs-reserved"
+                                               title="Open the reservation"
+                                               href="/admin/reservations/cal/{{index $reservations (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}/show?y={{$curYear}}&m={{$curMonth}}">R</a>
+                                        {{else}}
+                                            <input class="fs-day"
+                                                title="Block this day"
+                                                {{if gt (index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))) 0 }}
+                                                    checked
+                                                    name="remove_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}"
+                                                    value="{{index $blocks (printf "%s-%s-%d" $curYear $curMonth (add $index 1))}}"
+                                                {{else}}
+                                                    name="add_block_{{$roomID}}_{{printf "%s-%s-%d" $curYear $curMonth (add $index 1)}}" value="1"
+                                                {{end}}
+                                                type="checkbox">
+                                        {{end}}
+                                    </td>
+                                {{end}}
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            {{end}}
+
+            <div class="fs-save-bar">
+                <p>Changes to the ticks are only stored once you save this month.</p>
+                <button type="submit" class="fs-btn fs-btn--gold">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg>
+                    Save changes
+                </button>
+            </div>
+        </form>
     </div>
 {{end}}

@@ -1,33 +1,89 @@
 {{template "base" .}}
 
+{{define "title"}}Check availability · {{end}}
+
 {{define "content"}}
-<div class="container">
-        <div class="row">
-            <div class="col-md-3"></div>
-            <div class="col-md-6">
-                <h1 class="text-center mt-3">Search for Availability</h1>
-                <form action="/search-availability" method="post" novalidate class="needs-validation">
-                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-                    <div class="row" id="reservation-dates">
-                        <div class="col">
-                            <div class="mb-3">
-                                <input required class="form-control" type="text" name="start" placeholder="Arrival">
+    <section class="section">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-9">
+                    <ul class="step-list">
+                        <li class="is-active"><span>Step 1</span>Choose your dates</li>
+                        <li><span>Step 2</span>Pick a free room</li>
+                        <li><span>Step 3</span>Leave your details</li>
+                        <li><span>Step 4</span>Confirmation by email</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row justify-content-center g-4">
+                <div class="col-lg-7">
+                    <div class="booking-panel">
+                        <span class="eyebrow">Availability</span>
+                        <h1 class="h2">When would you like to stay?</h1>
+                        <p class="text-muted">
+                            Pick an arrival and a departure date and we'll show which of our two rooms is
+                            still free for those nights.
+                        </p>
+
+                        <form action="/search-availability" method="post" novalidate class="needs-validation">
+                            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                            <div class="row" id="reservation-dates">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="start" class="form-label">Arrival</label>
+                                        <input required class="form-control" type="text" id="start" name="start" placeholder="yyyy-mm-dd" autocomplete="off">
+                                        <div class="invalid-feedback">Please choose an arrival date.</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="end" class="form-label">Departure</label>
+                                        <input required class="form-control" type="text" id="end" name="end" placeholder="yyyy-mm-dd" autocomplete="off">
+                                        <div class="invalid-feedback">Please choose a departure date.</div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="col">
-                            <div class="mb-3">
-                                <input required class="form-control" type="text" name="end" placeholder="Departure">
-                            </div>
-                        </div>
+                            <button type="submit" class="btn btn-brand btn-lg w-100 mt-2">Search availability</button>
+                            <p class="text-muted small text-center mb-0 mt-3">
+                                Searching is free and does not hold the room — you confirm on the next steps.
+                            </p>
+                        </form>
                     </div>
-                    <hr>
-                    <button type="submit" class="btn btn-primary">Search Availability</button>
-                </form>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="card-soft p-4 mb-4">
+                        <h2 class="h5">Good to know before booking</h2>
+                        <ul class="amenity-list mt-3 mb-0">
+                            <li>Breakfast, parking, Wi-Fi and taxes are in the rate</li>
+                            <li>No prepayment — you pay on departure</li>
+                            <li>Free cancellation up to 48 hours before arrival</li>
+                            <li>Check-in 15:00 – 21:00, check-out until 11:00</li>
+                            <li>Two-night minimum on summer weekends</li>
+                        </ul>
+                    </div>
+
+                    <div class="card-soft p-4">
+                        <h2 class="h6 text-uppercase fact-label mb-3">Our rates</h2>
+                        <table class="table hours-table mb-0">
+                            <tbody>
+                                <tr><td>General's Quarters</td><td>from $189</td></tr>
+                                <tr><td>Major's Suite</td><td>from $225</td></tr>
+                                <tr><td>Extra guest (sofa bed)</td><td>$35 / night</td></tr>
+                                <tr><td>Dog in the suite</td><td>$20 / stay</td></tr>
+                            </tbody>
+                        </table>
+                        <p class="text-muted small mb-0 mt-3">
+                            Prefer to book by phone? Call <a href="tel:+19025551212">+1 (902) 555-1212</a>,
+                            daily 8:00 – 21:00.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
-
-    </div>
+    </section>
 {{end}}
 
 {{define "js"}}
@@ -37,7 +93,7 @@
         const rangepicker = new DateRangePicker(elem, {
             format: "yyyy-mm-dd",
             minDate: new Date(),
-        }); 
+        });
     </script>
 
 {{end}}

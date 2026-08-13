@@ -1,0 +1,1008 @@
+/* ==========================================================================
+   Оформление страниц админки: дашборд, списки броней, календарь.
+   Всё под префиксом .fs-* , чтобы не задевать вендорную тему
+   из /static/admin/css/style.css
+   ========================================================================== */
+
+.fs-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+    padding: 2.25rem 2.5rem;
+    background: linear-gradient(120deg, #0e2846 0%, #163b65 55%, #1d5089 100%);
+    color: #fff;
+    box-shadow: 0 16px 34px rgba(14, 40, 70, .22);
+}
+
+.fs-hero::after {
+    content: "";
+    position: absolute;
+    right: -60px;
+    top: -80px;
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    background: rgba(200, 161, 90, .18);
+}
+
+.fs-hero__eyebrow {
+    display: inline-block;
+    font-size: .7rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: #c8a15a;
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.fs-hero h2 {
+    color: #fff;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.75rem;
+    margin-bottom: .75rem;
+}
+
+.fs-hero p {
+    color: rgba(255, 255, 255, .8);
+    max-width: 46rem;
+    margin-bottom: 0;
+}
+
+.fs-hero__actions {
+    position: relative;
+    z-index: 1;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.fs-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .6rem 1.15rem;
+    border-radius: 10px;
+    font-size: .9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform .15s ease, background-color .15s ease;
+}
+
+.fs-btn:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+.fs-btn--gold {
+    background: #c8a15a;
+    color: #0e2846;
+}
+
+.fs-btn--gold:hover {
+    background: #d8b571;
+    color: #0e2846;
+}
+
+.fs-btn--ghost {
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, .3);
+}
+
+.fs-btn--ghost:hover {
+    background: rgba(255, 255, 255, .2);
+    color: #fff;
+}
+
+/* ------------------------------------------------------ плитки действий --- */
+
+.fs-tile {
+    display: flex;
+    gap: 1rem;
+    height: 100%;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid #e4e6ee;
+    border-left: 4px solid var(--fs-tile-accent, #248afd);
+    color: #2a3547;
+    text-decoration: none;
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.fs-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px rgba(20, 30, 60, .12);
+    color: #2a3547;
+    text-decoration: none;
+}
+
+.fs-tile__icon {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--fs-tile-soft, #eaf3ff);
+    color: var(--fs-tile-accent, #248afd);
+}
+
+.fs-tile__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: .3rem;
+}
+
+.fs-tile__text {
+    font-size: .85rem;
+    color: #76838f;
+    margin-bottom: .75rem;
+}
+
+.fs-tile__link {
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: var(--fs-tile-accent, #248afd);
+}
+
+.fs-tile--new {
+    --fs-tile-accent: #248afd;
+    --fs-tile-soft: #e8f2ff;
+}
+
+.fs-tile--all {
+    --fs-tile-accent: #71c016;
+    --fs-tile-soft: #edf8e2;
+}
+
+.fs-tile--calendar {
+    --fs-tile-accent: #c8a15a;
+    --fs-tile-soft: #f8f1e3;
+}
+
+/* ------------------------------------------------------------ панели --- */
+
+.fs-panel {
+    height: 100%;
+    background: #fff;
+    border: 1px solid #e4e6ee;
+    border-radius: 16px;
+    padding: 1.75rem;
+}
+
+.fs-panel__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1d2733;
+    margin-bottom: .35rem;
+}
+
+.fs-panel__hint {
+    font-size: .85rem;
+    color: #76838f;
+    margin-bottom: 1.25rem;
+}
+
+/* --------------------------------------------------------- шаги флоу --- */
+
+.fs-flow {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.fs-flow::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: #e4e6ee;
+}
+
+.fs-flow li {
+    position: relative;
+    padding-left: 3rem;
+    padding-bottom: 1.25rem;
+}
+
+.fs-flow li:last-child {
+    padding-bottom: 0;
+}
+
+.fs-flow__num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #163b65;
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fs-flow__title {
+    font-weight: 600;
+    color: #1d2733;
+    margin-bottom: .15rem;
+}
+
+.fs-flow__text {
+    font-size: .85rem;
+    color: #76838f;
+    margin: 0;
+}
+
+/* ----------------------------------------------------------- таблица --- */
+
+.fs-table {
+    width: 100%;
+    margin: 0;
+}
+
+.fs-table th {
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #98a6ad;
+    font-weight: 700;
+    padding-bottom: .6rem;
+    border-bottom: 1px solid #e4e6ee;
+}
+
+.fs-table td {
+    padding: .7rem 0;
+    border-bottom: 1px solid #f0f1f5;
+    font-size: .9rem;
+}
+
+.fs-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.fs-room {
+    font-weight: 600;
+    color: #1d2733;
+}
+
+.fs-room small {
+    display: block;
+    font-weight: 400;
+    font-size: .78rem;
+    color: #98a6ad;
+}
+
+.fs-badge {
+    display: inline-block;
+    padding: .2rem .6rem;
+    border-radius: 999px;
+    font-size: .72rem;
+    font-weight: 700;
+    background: #eaf3ff;
+    color: #248afd;
+}
+
+.fs-badge--gold {
+    background: #f8f1e3;
+    color: #a8823f;
+}
+
+/* --------------------------------------------------------- заметки --- */
+
+.fs-note {
+    display: flex;
+    gap: .75rem;
+    padding: .9rem 1rem;
+    border-radius: 12px;
+    background: #f7f8fb;
+    font-size: .85rem;
+    color: #5a6672;
+    margin-bottom: .75rem;
+}
+
+.fs-note:last-child {
+    margin-bottom: 0;
+}
+
+.fs-note svg {
+    flex: 0 0 auto;
+    color: #248afd;
+    margin-top: .1rem;
+}
+
+.fs-note--warn svg {
+    color: #f5a623;
+}
+
+@media (max-width: 767.98px) {
+    .fs-hero {
+        padding: 1.75rem 1.5rem;
+    }
+
+    .fs-tile {
+        flex-direction: column;
+    }
+}
+
+/* ==========================================================================
+   Шапка страницы (списки броней, календарь)
+   ========================================================================== */
+
+.fs-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.fs-head__title {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.6rem;
+    color: #1d2733;
+    margin: 0 0 .3rem;
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+}
+
+.fs-head__hint {
+    font-size: .88rem;
+    color: #76838f;
+    margin: 0;
+    max-width: 46rem;
+}
+
+.fs-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 1.6rem;
+    padding: 0 .55rem;
+    border-radius: 999px;
+    background: #163b65;
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.fs-count--muted {
+    background: #e4e6ee;
+    color: #5a6672;
+}
+
+.fs-head__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+}
+
+.fs-btn--outline {
+    background: #fff;
+    color: #163b65;
+    border: 1px solid #d3d9e3;
+}
+
+.fs-btn--outline:hover {
+    background: #f4f7fb;
+    color: #163b65;
+}
+
+.fs-btn--navy {
+    background: #163b65;
+    color: #fff;
+}
+
+.fs-btn--navy:hover {
+    background: #0e2846;
+    color: #fff;
+}
+
+/* ==========================================================================
+   Таблица со списком броней
+   ========================================================================== */
+
+.fs-panel--flush {
+    padding: 1.25rem 1.5rem 1.5rem;
+}
+
+table.fs-list {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+table.fs-list thead th {
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: #98a6ad;
+    font-weight: 700;
+    padding: .5rem .75rem;
+    border-bottom: 1px solid #e4e6ee;
+    background: transparent;
+    white-space: nowrap;
+}
+
+table.fs-list tbody td {
+    padding: .85rem .75rem;
+    border-bottom: 1px solid #f0f1f5;
+    border-top: 0;
+    font-size: .9rem;
+    color: #2a3547;
+    vertical-align: middle;
+}
+
+table.fs-list tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+table.fs-list tbody tr:hover td {
+    background: #f7f9fc;
+}
+
+.fs-id {
+    font-variant-numeric: tabular-nums;
+    color: #98a6ad;
+    font-size: .82rem;
+}
+
+.fs-guest {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    font-weight: 600;
+    color: #163b65;
+    text-decoration: none;
+}
+
+.fs-guest:hover {
+    color: #0e2846;
+    text-decoration: none;
+}
+
+.fs-guest:hover .fs-guest__name {
+    text-decoration: underline;
+}
+
+.fs-avatar {
+    width: 34px;
+    height: 34px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #e8f0fb;
+    color: #163b65;
+    font-size: .85rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+}
+
+.fs-dates {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.fs-dates svg {
+    color: #c1c8d4;
+}
+
+.fs-pill {
+    display: inline-block;
+    padding: .22rem .65rem;
+    border-radius: 999px;
+    font-size: .74rem;
+    font-weight: 700;
+    white-space: nowrap;
+    background: #eef0f5;
+    color: #5a6672;
+}
+
+.fs-pill--blue {
+    background: #e8f2ff;
+    color: #1d6fd0;
+}
+
+.fs-pill--gold {
+    background: #f8f1e3;
+    color: #a8823f;
+}
+
+.fs-pill--green {
+    background: #edf8e2;
+    color: #4e8a10;
+}
+
+.fs-pill--dot::before {
+    content: "";
+    display: inline-block;
+    width: .45rem;
+    height: .45rem;
+    border-radius: 50%;
+    background: currentColor;
+    margin-right: .4rem;
+    vertical-align: middle;
+}
+
+/* пустое состояние */
+
+.fs-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #76838f;
+}
+
+.fs-empty__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+    background: #f2f5f9;
+    color: #b6c0cd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fs-empty__title {
+    font-weight: 700;
+    color: #1d2733;
+    margin-bottom: .35rem;
+}
+
+.fs-empty p {
+    font-size: .88rem;
+    margin: 0;
+}
+
+/* простые дататейблы внутри панели */
+
+.fs-panel .dataTable-top,
+.fs-panel .dataTable-bottom {
+    padding: 0 0 .75rem;
+    font-size: .85rem;
+    color: #76838f;
+}
+
+.fs-panel .dataTable-bottom {
+    padding: .75rem 0 0;
+}
+
+.fs-panel .dataTable-input,
+.fs-panel .dataTable-selector {
+    border: 1px solid #dfe3ea;
+    border-radius: 8px;
+    padding: .35rem .6rem;
+    font-size: .85rem;
+}
+
+.fs-panel .dataTable-pagination a {
+    color: #163b65;
+    border-radius: 8px;
+}
+
+.fs-panel .dataTable-pagination .active a {
+    background: #163b65;
+    color: #fff;
+}
+
+/* ==========================================================================
+   Календарь брони
+   ========================================================================== */
+
+.fs-cal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid #e4e6ee;
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.fs-cal-month {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.35rem;
+    color: #1d2733;
+    text-align: center;
+    margin: 0;
+}
+
+.fs-cal-month small {
+    display: block;
+    font-family: system-ui, sans-serif;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: #98a6ad;
+    margin-top: .2rem;
+}
+
+.fs-nav-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid #dfe3ea;
+    background: #fff;
+    color: #163b65;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color .15s ease;
+}
+
+.fs-nav-btn:hover {
+    background: #f4f7fb;
+    color: #0e2846;
+    text-decoration: none;
+}
+
+.fs-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    font-size: .8rem;
+    color: #76838f;
+    margin-bottom: 1.25rem;
+}
+
+.fs-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.fs-legend i {
+    width: 16px;
+    height: 16px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.fs-legend .is-free {
+    border: 1px solid #dfe3ea;
+    background: #fff;
+}
+
+.fs-legend .is-blocked {
+    background: #c8a15a;
+}
+
+.fs-legend .is-reserved {
+    background: #fdeaea;
+    border: 1px solid #f3b7b7;
+}
+
+.fs-room-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .85rem;
+}
+
+.fs-room-head h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1d2733;
+    margin: 0;
+}
+
+.fs-cal-scroll {
+    overflow-x: auto;
+    padding-bottom: .25rem;
+}
+
+table.fs-cal {
+    border-collapse: separate;
+    border-spacing: 4px;
+    margin: 0 auto;
+}
+
+table.fs-cal td {
+    width: 34px;
+    min-width: 34px;
+    padding: 0;
+    text-align: center;
+    border: 0;
+}
+
+.fs-cal__day {
+    font-size: .72rem;
+    font-weight: 700;
+    color: #98a6ad;
+    padding-bottom: .15rem;
+}
+
+.fs-cal__cell {
+    height: 34px;
+}
+
+/* чекбокс-день */
+
+.fs-day {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 34px;
+    height: 34px;
+    margin: 0;
+    border: 1px solid #e0e4ea;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: background-color .12s ease, border-color .12s ease, transform .12s ease;
+}
+
+.fs-day:hover {
+    border-color: #c8a15a;
+    transform: translateY(-1px);
+}
+
+.fs-day:checked {
+    background: #c8a15a;
+    border-color: #b8914a;
+}
+
+.fs-day:checked::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    top: 9px;
+    width: 7px;
+    height: 12px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.fs-day:focus-visible {
+    outline: 2px solid #248afd;
+    outline-offset: 2px;
+}
+
+/* день с бронью */
+
+.fs-reserved {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #fdeaea;
+    border: 1px solid #f3b7b7;
+    color: #cf3d3d;
+    font-size: .8rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.fs-reserved:hover {
+    background: #f9d9d9;
+    color: #a92c2c;
+    text-decoration: none;
+}
+
+.fs-save-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: #fff;
+    border: 1px solid #e4e6ee;
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.fs-save-bar p {
+    margin: 0;
+    font-size: .85rem;
+    color: #76838f;
+}
+
+@media (max-width: 767.98px) {
+    .fs-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .fs-cal-head {
+        flex-wrap: wrap;
+    }
+}
+
+/* ==========================================================================
+   Верхняя панель админки (перекрывает вендорную тему Star Admin)
+   ========================================================================== */
+
+.navbar.fs-topbar {
+    background: linear-gradient(90deg, #0e2846 0%, #163b65 100%);
+    box-shadow: 0 6px 20px -8px rgba(14, 40, 70, .55);
+}
+
+.navbar.fs-topbar .navbar-brand-wrapper {
+    background: transparent;
+    border-right: 1px solid rgba(255, 255, 255, .12);
+}
+
+/* вендорная тема заливает правую часть панели белым — снимаем,
+   иначе светлый текст ссылок на ней не виден */
+.navbar.fs-topbar .navbar-menu-wrapper {
+    background: transparent;
+    color: rgba(255, 255, 255, .82);
+    padding-left: 1.25rem;
+    padding-right: 1.5rem;
+}
+
+/* бренд */
+
+.navbar.fs-topbar .fs-topbar__brand {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.25rem;
+    line-height: 1.1;
+    color: #fff;
+    text-align: left;
+}
+
+.navbar.fs-topbar .fs-topbar__brand:hover,
+.navbar.fs-topbar .fs-topbar__brand:focus {
+    color: #fff;
+}
+
+.navbar.fs-topbar .fs-topbar__brand small {
+    display: block;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: .6rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: #c8a15a;
+    margin-top: .15rem;
+}
+
+.navbar.fs-topbar .fs-topbar__brand-mini {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    color: #c8a15a;
+}
+
+.navbar.fs-topbar .fs-topbar__brand-mini:hover {
+    color: #d8b571;
+}
+
+/* кнопки-гамбургеры */
+
+.navbar.fs-topbar .fs-topbar__toggle {
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, .7);
+    font-size: 1.15rem;
+    padding: .35rem .5rem;
+    border-radius: 8px;
+    transition: background-color .15s ease, color .15s ease;
+}
+
+.navbar.fs-topbar .fs-topbar__toggle:hover {
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+}
+
+/* ссылки справа */
+
+.navbar.fs-topbar .navbar-nav-right {
+    gap: .5rem;
+}
+
+.navbar.fs-topbar .navbar-nav-right .nav-item {
+    margin-left: 0;
+}
+
+.fs-topbar__link,
+.fs-topbar__logout {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem .95rem;
+    border-radius: 10px;
+    font-size: .87rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+
+.fs-topbar__link {
+    color: rgba(255, 255, 255, .82);
+}
+
+.fs-topbar__link:hover,
+.fs-topbar__link:focus {
+    background: rgba(255, 255, 255, .12);
+    color: #fff;
+    text-decoration: none;
+}
+
+.fs-topbar__logout {
+    color: #c8a15a;
+    border: 1px solid rgba(200, 161, 90, .55);
+}
+
+.fs-topbar__logout:hover,
+.fs-topbar__logout:focus {
+    background: #c8a15a;
+    border-color: #c8a15a;
+    color: #0e2846;
+    text-decoration: none;
+}
+
+/* пункт возврата на публичный сайт в боковом меню */
+
+.sidebar .nav .nav-item.fs-sidebar-back {
+    margin-top: .75rem;
+    padding-top: .75rem;
+    border-top: 1px solid #eef0f5;
+}
+
+.sidebar .nav .nav-item.fs-sidebar-back .nav-link {
+    color: #163b65;
+}
+
+.sidebar .nav .nav-item.fs-sidebar-back .nav-link i.menu-icon {
+    color: #c8a15a;
+}
+
+@media (max-width: 991.98px) {
+    .navbar.fs-topbar .navbar-brand-wrapper {
+        border-right: 0;
+    }
+
+    .navbar.fs-topbar .navbar-menu-wrapper {
+        padding-left: .75rem;
+        padding-right: .75rem;
+    }
+
+    .fs-topbar__link,
+    .fs-topbar__logout {
+        padding: .5rem .75rem;
+        font-size: .82rem;
+    }
+}
+
+/* подписи прячем только на совсем узких экранах */
+@media (max-width: 575.98px) {
+    .fs-topbar__link span,
+    .fs-topbar__logout span {
+        display: none;
+    }
+
+    .fs-topbar__link,
+    .fs-topbar__logout {
+        padding: .5rem .6rem;
+    }
+}
